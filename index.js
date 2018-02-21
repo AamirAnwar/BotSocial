@@ -28,17 +28,6 @@ app.use(passport.session());
 // Setup passport
 // Used for encoding and decoding user session data associated with each http packet
 passport.use(new LocalStrategy(User.authenticate()));
-// passport.use(new LocalStrategy(
-//   function(username, password, done) {
-//   	console.log("Auth for "+ username);
-//     User.findOne({ username: username }, function (err, user) {
-//       if (err) { return done(err); }
-//       if (!user) { return done(null, false); }
-//       if (!user.verifyPassword(password)) { return done(null, false); }
-//       return done(null, user);
-//     });
-//   }
-// ));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -109,18 +98,20 @@ app.get("/login",function(req,res){
 	res.render("login");
 });
 
-app.post("/login",passport.authenticate("local",{successRedirect:"/",failureRedirect:"/login"}) ,function(req,res){
-	// Attempt to login
-	// var username = req.body.username;
-	// var password = req.body.password;
-	console.log("Successfully Logged in!")
-	
+app.post("/login",passport.authenticate("local",{successRedirect:"/",failureRedirect:"/login"}) ,function(req,res){});
+
+app.get("/logout",function(req,res){
+	req.logout();
+	res.redirect('/login');
 });
-
-
 
 // Fallback Route
 app.get("/*", function(req, res){
+	if (req.isAuthenticated() == false) {
+		res.redirect("/login");
+		return
+	}
+
 	GetStories(function(stories) {
 		res.render("home", {stories:stories});
 	});
