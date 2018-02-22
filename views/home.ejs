@@ -32,6 +32,10 @@
 				<p class="card-text mb-auto">
 					<%=stories[i].text%>
 				</p>
+				<%if (stories[i].author.username != undefined) { %>
+				<!-- <br> -->
+				<p class="text-muted">posted by: <%=stories[i].author.username%></p>
+				<%}%>
 			</div>
 		</div>
 	</div>
