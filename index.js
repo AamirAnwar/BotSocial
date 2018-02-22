@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var passportLocalMongoose = require('passport-local-mongoose');
-
+var middleware = require('./middleware');
 // Data Models
 var User = require('./models/user')
 var Story = require('./models/story');
@@ -49,7 +49,7 @@ mongoose.connect(mongoConnectURL);
 app.use(AuthRouter);
 app.use('/story',StoryRouter);
 
-app.get('/profile/:id', function(req,res) {
+app.get('/profile/:id',middleware.isLoggedIn, function(req,res) {
 	user_id = req.params.id;
 	if (!user_id) {
 		user_id = req.user._id;
