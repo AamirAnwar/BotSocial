@@ -6,4 +6,11 @@
 </head>
 <body class='container'>
 	<%include head.ejs%>
+	<%if (flash_msg) {%>
+		<div class="alert alert-success" role="alert">
+			<%=flash_msg%>
+	</div>
+	<%}%>
+
+	
 

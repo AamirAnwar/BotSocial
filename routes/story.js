@@ -17,6 +17,7 @@ router.post("/",middleware.isLoggedIn,function(req,res){
 			story.save();
 			console.log(story);
 		}
+		req.flash('flash_msg', 'Successfully posted story!');
 		res.redirect("/");
 	});
 });

@@ -16,6 +16,12 @@
 	<link href="/stylesheets/register_page.css" rel="stylesheet">
 </head>
 <body id="container">
+	<%if (flash_msg) {%>
+		<div class="alert alert-success" role="alert">
+			<%=flash_msg%>
+	</div>
+	<%}%>
+	
 	<div>
 		<form class="form-signin container" action="/Login" method="POST">
 			<div class="text-center mb-4">

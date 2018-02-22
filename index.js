@@ -5,6 +5,10 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var passportLocalMongoose = require('passport-local-mongoose');
 var middleware = require('./middleware');
+var expressSession = require('express-session');
+var flash = require('connect-flash-light');
+var cookieParser = require('cookie-parser');
+
 // Data Models
 var User = require('./models/user')
 var Story = require('./models/story');
@@ -21,17 +25,20 @@ var PORT = 3000;
 app.set('view engine','ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require('express-session')({
+app.use(cookieParser());
+app.use(expressSession({
 	secret:'requiescat in pace',
 	resave:false,
 	saveUninitialized:false
 }));
+app.use(flash());
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use( function(req, res, next) {
 	res.locals.currentUser = req.user;
-	// res.locals.message = req.flash('message');
+	res.locals.flash_msg = req.flash('flash_msg');
 	next();
 });
 
@@ -72,7 +79,7 @@ app.get("/", function(req, res){
 		res.redirect("/login");
 		return
 	}
-
+	req.flash('flash_msg', 'Welcome to stories!');
 	GetStories(function(stories) {
 		res.render("home", {stories:stories});
 	});
