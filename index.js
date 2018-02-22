@@ -5,7 +5,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var passportLocalMongoose = require('passport-local-mongoose');
 
-
 // Data Models
 var User = require('./models/user')
 var Story = require('./models/story');
@@ -30,6 +29,12 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use( function(req, res, next) {
+	res.locals.currentUser = req.user;
+	// res.locals.message = req.flash('message');
+	next();
+});
+
 // Setup passport
 // Used for encoding and decoding user session data associated with each http packet
 passport.use(new LocalStrategy(User.authenticate()));
@@ -44,8 +49,25 @@ mongoose.connect(mongoConnectURL);
 app.use(AuthRouter);
 app.use('/story',StoryRouter);
 
-// Fallback Route
-app.get("/*", function(req, res){
+app.get('/profile/:id', function(req,res) {
+	user_id = req.params.id;
+	if (!user_id) {
+		user_id = req.user._id;
+	}
+	console.log("Finding user with id :" + user_id);
+	User.findOne({_id:user_id}, function(err, user){
+		if (err || !user) {
+			console.log("No user!");
+			res.redirect('/');
+		}
+		else {
+			res.render('profile', {user:user});
+		}
+
+	});
+});
+
+app.get("/", function(req, res){
 	if (req.isAuthenticated() == false) {
 		res.redirect("/login");
 		return
@@ -54,7 +76,12 @@ app.get("/*", function(req, res){
 	GetStories(function(stories) {
 		res.render("home", {stories:stories});
 	});
-	
+});
+
+
+// Fallback Route
+app.get("/*", function(req, res){
+	res.send("Nothing here");
 });
 
 
