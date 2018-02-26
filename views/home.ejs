@@ -46,14 +46,14 @@ crossorigin="anonymous"></script>
 					<!-- Story reactions -->
 					<div class="story_reactions">
 						<span>
-							<!-- <form class="" action="/story/<%=stories[i]._id%>/like" method="post"> -->
 							<button id="<%=stories[i]._id%>" class="btn btn-primary like_button" name="button">
-								<span class='like_count'><%=stories[i].likes_count%></span>
+								<span class='like_count'><%=stories[i].likes.length%></span>
+
 								<i class="fa fa-thumbs-up"></i>
 							</button>
 							<button class="btn btn-danger" name="button"><%=stories[i].dislikes_count%><i class="fa fa-thumbs-down"></i> </button>
-							<!-- </form> -->
 						</span>
+
 					</div>
 
 				</div>
@@ -75,7 +75,8 @@ function like(story_id) {
 	$.post("/story/"+story_id+"/like", function(data) {
 		if (data.success == true) {
 			// Succeed in liking the picture
-			$("#"+data.story._id).find('.like_count').text(data.story.likes_count);
+			console.log("Data : " + data.count);
+			$("#"+data.story._id).find('.like_count').text(data.count);
 		}
 	});
 }

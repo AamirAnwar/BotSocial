@@ -29,20 +29,47 @@ router.post("/",middleware.isLoggedIn,function(req,res){
 	});
 });
 
-router.post("/:id/like", function(req,res) {
+router.post("/:id/like", middleware.isLoggedIn,function(req,res) {
 	Story.findById(req.params.id, function(err,story){
 		if (err) {
 			console.log(err);
 			return res.send('Error');
 		}
-		//Is this correct? wtf
-		story.likes_count = story.likes_count + 1;
-		story.save(function(err) {
-			if (err) {
-				console.log(err);
+		var isLiked = false;
+		var index = -1
+		const numLikes = story.likes.length;
+		console.log(story.likes);
+		for (var i = 0; i < story.likes.length; i++) {
+			console.log("Left - " + typeof(story.likes[i]._id));
+
+			console.log("Right - " + typeof(req.user._id));
+			if (story.likes[i]._id.equals(req.user._id)) {
+				console.log('already liked!');
+				index = i;
+				isLiked = true;
 			}
-			res.json({success:true,story:story});
-		});
+		}
+
+		if (isLiked) {
+			story.likes.splice(index,1)
+			story.save(function(err) {
+				if (err) {
+					console.log(err);
+				}
+				res.json({success:true,story:story, count:(numLikes - 1)});
+			});
+		}
+		else {
+			console.log('Havent liked yet');
+			story.likes.push(res.locals.currentUser._id);
+			story.save(function(err) {
+				if (err) {
+					console.log(err);
+				}
+				res.json({success:true,story:story, count:(numLikes + 1)});
+			});
+		}
+
 
 
 	});

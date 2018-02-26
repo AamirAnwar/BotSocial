@@ -126,7 +126,7 @@ var GetUserStories = function(id, callback) {
 }
 
 var GetStories = function(callback){
-	Story.find({},null,{sort:'-date'},function(err, stories) {
+	Story.find({},null,{sort:'-date'}).populate('likes').exec(function (err, stories) {
 		if (err) {
 			callback([]);
 		}
