@@ -36,7 +36,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use( function(req, res, next) {
+app.use(function(req, res, next) {
+	// These are global variables
 	res.locals.currentUser = req.user;
 	res.locals.flash_msg = req.flash('flash_msg');
 	next();
@@ -79,7 +80,6 @@ app.get("/", function(req, res){
 		res.redirect("/login");
 		return
 	}
-	req.flash('flash_msg', 'Welcome to stories!');
 	GetStories(function(stories) {
 		res.render("home", {stories:stories});
 	});
