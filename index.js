@@ -21,25 +21,41 @@ var StoryRouter = require('./routes/story');
 var app = express();
 var PORT = 3000;
 
-// Express middleware and setup 
+// Express middleware and setup
+
+// Templating engine -> EJS
 app.set('view engine','ejs');
+
+// Set public directory for static content [Static HTML,stylesheets and js files]
 app.use(express.static('public'));
+
+//  Allows us to do 'req.body and req.query'
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Used for displaying flash messages
 app.use(cookieParser());
+
+// Needed for passport password salting and flash messages
 app.use(expressSession({
 	secret:'requiescat in pace',
 	resave:false,
 	saveUninitialized:false
 }));
+
+// Tell express to use the flash module. This is setup step for displaying flash messages
 app.use(flash());
 
+// Passport initialization steps
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Setup custom middleware for setting global variables on all response objects
 app.use(function(req, res, next) {
 	// These are global variables
 	res.locals.currentUser = req.user;
 	res.locals.flash_msg = req.flash('flash_msg');
+	res.locals.flash_msg_fail = req.flash('flash_msg_fail');
+
 	next();
 });
 
@@ -57,24 +73,28 @@ mongoose.connect(mongoConnectURL);
 app.use(AuthRouter);
 app.use('/story',StoryRouter);
 
+// Show profile page
 app.get('/profile/:id',middleware.isLoggedIn, function(req,res) {
 	user_id = req.params.id;
 	if (!user_id) {
 		user_id = req.user._id;
 	}
-	console.log("Finding user with id :" + user_id);
+
 	User.findOne({_id:user_id}, function(err, user){
 		if (err || !user) {
 			console.log("No user!");
 			res.redirect('/');
 		}
 		else {
-			res.render('profile', {user:user});
+			GetUserStories(user._id, function(stories) {
+				res.render('profile', {user:user, stories:stories});
+			});
 		}
 
 	});
 });
 
+// Home page
 app.get("/", function(req, res){
 	if (req.isAuthenticated() == false) {
 		res.redirect("/login");
@@ -93,8 +113,20 @@ app.get("/*", function(req, res){
 
 
 // DB Helpers
+var GetUserStories = function(id, callback) {
+	Story.find({'author.id':id}, function(err, stories){
+		if (err) {
+			console.log(err);
+			callback([]);
+		}
+		else {
+			callback(stories);
+		}
+	});
+}
+
 var GetStories = function(callback){
-	Story.find({},function(err, stories) {
+	Story.find({},null,{sort:'-date'},function(err, stories) {
 		if (err) {
 			callback([]);
 		}

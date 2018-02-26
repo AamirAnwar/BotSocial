@@ -1,0 +1,6 @@
+
+#profile_image {
+  clip-path:circle(100px at center);
+  max-width: 200px;
+  max-height: 200px;
+}
