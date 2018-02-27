@@ -16,7 +16,7 @@ crossorigin="anonymous"></script>
 						<!-- username -->
 						<h4 class="mb-0">
 							<span>
-								<img class="profile_image" src="https://pbs.twimg.com/profile_images/948641399611695104/pIXXR975_400x400.jpg" alt="">
+								<img class="profile_image" src="/images/<%=stories[i].author.id%>.jpg" alt="">
 							</span>
 							<a href="/profile/<%=stories[i].author.id%>"><%=stories[i].author.username%></a>
 						</h4>
@@ -71,7 +71,6 @@ crossorigin="anonymous"></script>
 			$.post("/story/"+story_id.substring(5)+"/like", function(data) {
 				if (data.success == true) {
 					// Succeed in liking the picture
-					console.log("Data : " + data.count);
 					$("#like_"+data.story._id).animateCss('bounceIn');
 					$("#like_"+data.story._id).find('.like_count').text(data.count);
 				}
@@ -90,29 +89,28 @@ crossorigin="anonymous"></script>
 		}
 
 		$.fn.extend({
-  animateCss: function(animationName, callback) {
-    var animationEnd = (function(el) {
-      var animations = {
-        animation: 'animationend',
-        OAnimation: 'oAnimationEnd',
-        MozAnimation: 'mozAnimationEnd',
-        WebkitAnimation: 'webkitAnimationEnd',
-      };
+			animateCss: function(animationName, callback) {
+				var animationEnd = (function(el) {
+					var animations = {
+						animation: 'animationend',
+						OAnimation: 'oAnimationEnd',
+						MozAnimation: 'mozAnimationEnd',
+						WebkitAnimation: 'webkitAnimationEnd',
+					};
 
-      for (var t in animations) {
-        if (el.style[t] !== undefined) {
-          return animations[t];
-        }
-      }
-    })(document.createElement('div'));
+					for (var t in animations) {
+						if (el.style[t] !== undefined) {
+							return animations[t];
+						}
+					}
+				})(document.createElement('div'));
 
-    this.addClass('animated ' + animationName).one(animationEnd, function() {
-      $(this).removeClass('animated ' + animationName);
+				this.addClass('animated ' + animationName).one(animationEnd, function() {
+					$(this).removeClass('animated ' + animationName);
 
-      if (typeof callback === 'function') callback();
-    });
-
-    return this;
-  },
-});
+					if (typeof callback === 'function') callback();
+				});
+				return this;
+			},
+		});
 		</script>

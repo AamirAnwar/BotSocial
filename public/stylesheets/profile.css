@@ -1,17 +1,33 @@
+#profile_image {
+/* clip-path:circle(100px at center); */
+min-width: 100%;
+min-height: 100%;
+max-width: 120%;
+max-height: 120%;
+width: auto;
+height: auto;
+object-fit: contain;
+}
 
 #profile_image_container {
-  clip-path:circle(100px at center);
+clip-path:circle(50% at center);
   width: 200px;
   height: 200px;
   background-color: lightgrey;
+  cursor: pointer;
+  overflow: hidden;
+
 }
 
-.sidebar {
-  padding-left: 0px;
+#file_input {
+  display: none;
+}
+
+#profile_container {
+  margin-top: 25px;
 }
 
 #user_detail_snippet {
-  margin-top: 20px;
   width: 300px;
 }
 

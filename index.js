@@ -1,4 +1,5 @@
 var express = require('express');
+const fileUpload = require('express-fileupload');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -35,6 +36,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Used for displaying flash messages
 app.use(cookieParser());
+
+// Used for uploading profile picture
+app.use(fileUpload());
 
 // Needed for passport password salting and flash messages
 app.use(expressSession({
@@ -107,6 +111,20 @@ app.get("/", function(req, res){
 	});
 });
 
+app.post('/user/image',function(req,res){
+	if (!req.files) {
+		return res.status(400).send('No files were uploaded');
+	}
+	const file = req.files.image;
+	file.mv('./public/images/' + req.user._id + '.jpg', function(err){
+		if (err) {
+			return res.status(500).send(err);
+		}
+		res.redirect('back');
+
+	});
+
+});
 
 // Fallback Route
 app.get("/*", function(req, res){
