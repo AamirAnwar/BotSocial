@@ -9,7 +9,7 @@ var StorySchema = new mongoose.Schema({
 	date_posted:{type:String,default:moment().format('MMMM Do YYYY, h:mm:ss a')},
 	date:{type:Date,default:Date.now},
 	likes:[userType],
-	dislikes_count:{type:Number, default:0},
+	dislikes:[userType],
 	author: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref:'User'
