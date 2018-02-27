@@ -1,29 +1,30 @@
 <%include partials/header.ejs%>
 <!DOCTYPE html>
 <link rel="stylesheet" href="/stylesheets/profile.css">
-<img id="profile_image" src="https://pbs.twimg.com/profile_images/948641399611695104/pIXXR975_400x400.jpg" alt="">
-<h1><%=user.username%></h1>
-<h2>Stories</h2>
-<%for(var i =0;i<stories.length;i++) {%>
-	<div class="row mb-1">
-		<div class="col-md-12">
-			<div class="card flex-md-row mb-4 box-shadow h-md-250">
-				<div class="card-body d-flex flex-column align-items-start">
-					<h3 class="mb-0">
-						<a class="text-dark" href="#">Post #<%=i+1%></a>
-					</h3>
-					<div class="mb-1 text-muted"><%=stories[i].date%></div>
-					<p class="card-text mb-auto">
-						<%=stories[i].text%>
-					</p>
-					<%if (stories[i].author.username != undefined) { %>
-						<!-- <br> -->
-						<a href="/profile/<%=stories[i].author.id%>"<p class="text-muted">posted by: <%=stories[i].author.username%></p></a>
-						<%}%>
-					</div>
-				</div>
-			</div>
 
-		</div>
-		<%}%>
-		<%include partials/footer.ejs%>
+<div id="user_detail_snippet">
+  <div id="profile_image_container">
+    <img src="" alt="">
+  </div>
+  <h1 id="username_text"><%=user.username%></h1>
+</div>
+
+<div class='container'>
+  <div class="row">
+    <div class='col-md-4 sidebar'>
+      <p>Joined on <%=user.joinedDate%></p>
+    </div>
+
+    <div class='col-md-8 story_list'>
+      <h2>Stories</h2>
+      <%include story_list.ejs%>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<%include partials/footer.ejs%>

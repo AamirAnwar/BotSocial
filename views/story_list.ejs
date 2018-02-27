@@ -1,0 +1,71 @@
+<script
+src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/stories_list.css">
+<%if (stories.length == 0) {%>
+	<h1>	No stories yet!	</h1>
+	<%}%>
+	<%for(var i =0;i<stories.length;i++) {%>
+		<div class="row mb-1">
+			<div class="col-md-12">
+				<div class="card flex-md-row mb-4 box-shadow h-md-250">
+					<div class="card-body d-flex flex-column align-items-start">
+
+						<!-- username -->
+						<h4 class="mb-0">
+							<span>
+								<img class="profile_image" src="https://pbs.twimg.com/profile_images/948641399611695104/pIXXR975_400x400.jpg" alt="">
+							</span>
+							<a href="/profile/<%=stories[i].author.id%>"><%=stories[i].author.username%></a>
+						</h4>
+
+						<!-- date -->
+						<div class="story_date">
+							<p><%=stories[i].date_posted%></p>
+
+						</div>
+
+						<!-- story content -->
+						<p class="card-text mb-auto">
+							<%=stories[i].text%>
+						</p>
+
+						<!-- Story reactions -->
+						<div class="story_reactions">
+							<span>
+								<button id="<%=stories[i]._id%>" class="btn btn-primary like_button" name="button">
+									<span class='like_count'><%=stories[i].likes.length%></span>
+
+									<i class="fa fa-thumbs-up"></i>
+								</button>
+								<button class="btn btn-danger" name="button"><%=stories[i].dislikes_count%><i class="fa fa-thumbs-down"></i> </button>
+							</span>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<%}%>
+
+		<script type="text/javascript">
+
+		$(".like_button").click(function(){
+			// console.log("Like button clicked with id " + $(this).attr('id'));
+			like($(this).attr('id'));
+		});
+
+		function like(story_id) {
+			// console.log("getting theere!");
+			$.post("/story/"+story_id+"/like", function(data) {
+				if (data.success == true) {
+					// Succeed in liking the picture
+					console.log("Data : " + data.count);
+					$("#"+data.story._id).find('.like_count').text(data.count);
+				}
+			});
+		}
+		</script>

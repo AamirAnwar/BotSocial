@@ -3,38 +3,10 @@ textarea {
   margin-top: 20px;
 }
 
-.profile_image {
-  clip-path:circle(50% at center);
-  margin-right: 5px;
-  max-width: 40px;
-  max-height: 40px;
-}
-
 #story_submit_button {
   width: 100px;
 }
 
-.fa-thumbs-up, .fa-thumbs-down {
-  margin-left: 6px;
-}
-
-.story_reactions {
-  margin-top: 10px;
-}
-
-a {
-  color: inherit;
-}
-
-.story_date {
-  padding-top: 10px;
-}
-
 .container {
   width: 70%;
-}
-
-.story_date p {
-  color: gray;
-  font-size: 14px;
 }

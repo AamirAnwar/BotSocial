@@ -8,6 +8,7 @@ var middleware = require('./middleware');
 var expressSession = require('express-session');
 var flash = require('connect-flash-light');
 var cookieParser = require('cookie-parser');
+var moment = require('moment');
 
 // Data Models
 var User = require('./models/user')
@@ -87,6 +88,7 @@ app.get('/profile/:id',middleware.isLoggedIn, function(req,res) {
 		}
 		else {
 			GetUserStories(user._id, function(stories) {
+				user.joinedDate = moment(user.date).format('MMMM DD, YYYY')
 				res.render('profile', {user:user, stories:stories});
 			});
 		}
@@ -114,7 +116,7 @@ app.get("/*", function(req, res){
 
 // DB Helpers
 var GetUserStories = function(id, callback) {
-	Story.find({'author.id':id}, function(err, stories){
+	Story.find({'author':id}).populate('author').exec(function(err, stories){
 		if (err) {
 			console.log(err);
 			callback([]);
@@ -126,7 +128,8 @@ var GetUserStories = function(id, callback) {
 }
 
 var GetStories = function(callback){
-	Story.find({},null,{sort:'-date'}).populate('likes').exec(function (err, stories) {
+	Story.find({},null,{sort:'-date'}).populate('author').exec(function (err, stories) {
+		console.log(stories);
 		if (err) {
 			callback([]);
 		}

@@ -10,7 +10,10 @@ var StorySchema = new mongoose.Schema({
 	date:{type:Date,default:Date.now},
 	likes:[userType],
 	dislikes_count:{type:Number, default:0},
-	author:userType,
-	username:String	
+	author: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'User'
+	},
+	username:String
 });
 module.exports =  mongoose.model("Story", StorySchema);
