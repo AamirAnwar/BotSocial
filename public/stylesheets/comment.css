@@ -1,0 +1,26 @@
+.card {
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.row {
+  margin-top: 10px;
+}
+.comment_container {
+  margin-top: 30px;
+}
+
+.comment_text {
+  clear: both;
+}
+
+.comment_row {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.comment_user_detail {
+  float:left;
+  margin: 5px 5px 5px 0;
+}

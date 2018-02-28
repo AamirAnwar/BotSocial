@@ -25,7 +25,7 @@
 
 						<% if(stories[i].video_url) { %>
 							<!-- Story Video -->
-							<video class="story_video" autoplay>
+							<video class="story_video">
 								<source src="<%=stories[i].video_url%>" type="video/mp4">
 								</video>
 						<% } else { %>
@@ -40,19 +40,39 @@
 							<!-- Story reactions -->
 							<div class="story_reactions">
 							<span>
+
+								<!-- Like button -->
 								<button id="like_<%=stories[i]._id%>" class="btn btn-primary like_button" name="button">
 									<span class='like_count'><%=stories[i].likes.length%></span>
 
 									<i class="fa fa-thumbs-up"></i>
 								</button>
+
+								<!-- Dislikes button -->
 								<button class="btn btn-danger dislike_button" name="button" id="dislike_<%=stories[i]._id%>">
 									<span class='dislike_count'><%=stories[i].dislikes.length%></span>
 									<i class="fa fa-thumbs-down"></i>
 								</button>
+
+								<!-- Comments button -->
+								<button class="btn btn-dark comments_button" data-toggle="modal" data-target="#modal_<%=stories[i]._id%>" name="button" id="comments_button_<%=stories[i]._id%>">
+									<span class='comments_count'><%=stories[i].comments.length%></span>
+									<i class="fa fa-comments"></i>
+								</button>
+
+								<!-- Comments Modal -->
+								<div id="modal_<%=stories[i]._id%>" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-lg" id="modal_dialog_<%=stories[i]._id%>">
+										<div class="modal-content">
+											<!-- Modal Content -->
+											<%- include('comment', {story:stories[i]}); %>
+										</div>
+									</div>
+								</div>
+
+
 							</span>
-
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -61,6 +81,16 @@
 		<%}%>
 
 		<script type="text/javascript">
+
+		function openCommentsDialog(story_id) {
+
+		}
+
+		$(".comments_button").click(function() {
+			// modal-content
+			const prefix = "comments_button_";
+			openCommentsDialog($(this).attr('id').substring(prefix.length));
+		});
 
 		$(".like_button").click(function(){
 			// console.log("Like button clicked with id " + $(this).attr('id'));

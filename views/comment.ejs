@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/stylesheets/comment.css">
+<div class="card">
+  <div class="card-block">
+
+    <div class="container comment_container">
+      <div class="row">
+        <div class="col-lg-1">
+          <img class="profile_image" src="/images/<%=story.author._id%>.jpg" alt="">
+        </div>
+        <!-- Comment form -->
+        <div class="col-lg-11">
+          <form action="/story/<%=story._id%>/comment" method="post">
+            <div class="form-group">
+              <input type="text" name="text" class="form-control" id="comment_text_field"  placeholder="Say something">
+            </div>
+            <button id='story_submit_button' type="button submit" class="btn btn-success">Comment</button>
+          </form>
+        </div>
+      </div>
+      <%for(var j=0;j<story.comments.length;j++) {%>
+        <!-- Comments list -->
+        <div class="row comment_row">
+          <div class="card-block col-lg-12">
+            <div class="card">
+
+              <div class="row">
+                <div class="col-lg-1">
+                  <img class="profile_image" src="/images/<%=story.comments[j].author.id%>.jpg" alt="">
+                </div>
+
+                <div class="col-lg-11">
+                  <h5 class="comment_user_detail"><%=story.comments[j].author.username%></h5>
+                  <div class="comment_user_detail"><%=story.comments[j].date%></div>
+                  <div class="comment_text">
+                    <p><%=story.comments[j].text%></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%}%>
+      </div>
+    </div>
+  </div>

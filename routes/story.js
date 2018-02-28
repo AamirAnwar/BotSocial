@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const fileUpload = require('express-fileupload');
 var Story = require('mongoose').model('Story');
+var Comment = require('mongoose').model('Comment');
 var middleware = require("../middleware");
 
 // router.use(fileUpload());
@@ -137,6 +138,35 @@ router.post("/:id/like", middleware.isLoggedIn,function(req,res) {
 				res.json({success:true,story:story, count:(numLikes + 1)});
 			});
 		}
+	});
+});
+
+// Comment on a story
+router.post('/:id/comment', middleware.isLoggedIn,function(req,res){
+	console.log(req);
+	const text = req.body.text;
+	if (text.length < 1) {
+		return res.status(500).send("No text!");
+	}
+
+	Story.findById(req.params.id,function(err,story) {
+		if (err || !story) {
+			return res.status(404).send("Couldnt find a story");
+		}
+		Comment.create({text:text,author:{id:req.user._id,username:req.user.username}},function(err, comment){
+			if (err) {
+				return res.status(404).send("Couldnt find a story");
+			}
+			story.comments.push(comment);
+			story.save(function(err){
+				if (err) {
+						return res.status(404).send("error");
+				}
+				return res.redirect("back");
+			})
+
+		});
+
 	});
 });
 
