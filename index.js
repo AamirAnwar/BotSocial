@@ -126,6 +126,24 @@ app.post('/user/image',function(req,res){
 
 });
 
+app.post('/stories',function(req,res){
+	if (!req.files) {
+		return res.status(400).send('No files were uploaded');
+	}
+	console.log(req.files);
+	return res.redirect('back');
+	const file = req.files.image;
+	file.mv('./public/images/' + req.user._id + '.jpg', function(err){
+		if (err) {
+			return res.status(500).send(err);
+		}
+		res.redirect('back');
+
+	});
+
+});
+
+
 // Fallback Route
 app.get("/*", function(req, res){
 	res.send("Nothing here");
@@ -147,7 +165,6 @@ var GetUserStories = function(id, callback) {
 
 var GetStories = function(callback){
 	Story.find({},null,{sort:'-date'}).populate('author').exec(function (err, stories) {
-		console.log(stories);
 		if (err) {
 			callback([]);
 		}

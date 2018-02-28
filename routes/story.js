@@ -1,13 +1,20 @@
 var express = require('express');
 var router = express.Router();
+const fileUpload = require('express-fileupload');
 var Story = require('mongoose').model('Story');
 var middleware = require("../middleware");
 
+// router.use(fileUpload());
+
 // Create a story
 router.post("/",middleware.isLoggedIn,function(req,res){
+	console.log(req.body);
 	if (req.body.text.length <= 0) {
 		req.flash('flash_msg_fail', 'Stories have to be non-empty!');
 		return res.redirect('back');
+	}
+	if (!req.files) {
+		return res.status(400).send('No files were uploaded');
 	}
 
 	Story.create({text:req.body.text}, function(err, story){
@@ -17,13 +24,32 @@ router.post("/",middleware.isLoggedIn,function(req,res){
 			res.redirect('back');
 		}
 		else {
-			console.log("Current user is" + req.user);
-			story.author = req.user._id;
-			story.save();
-			console.log(story);
+			// console.log("Current user is" + req.user);
+
+			// Save image
+			const file = req.files.image;
+			if (file) {
+				file.mv('./public/images/' + story._id + '.jpg', function(err){
+					if (err) {
+						//TODO But the story has already been saved!. Problem here if this fails
+						return res.status(500).send(err);
+					}
+
+
+				story.author = req.user._id;
+				story.save(function (err) {
+					req.flash('flash_msg', 'Successfully posted story!');
+					return res.redirect("/");
+				});
+
+
+			});
+			// console.log(story);
 		}
-		req.flash('flash_msg', 'Successfully posted story!');
-		res.redirect("/");
+		else {
+			return res.status(500).send("Failed!");
+		}
+	}
 	});
 });
 

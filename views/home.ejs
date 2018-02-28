@@ -1,18 +1,53 @@
 <%include partials/header.ejs%>
 <link rel="stylesheet" href="/stylesheets/home.css">
-<form action="/story" method="POST">
+<form ref="uploadForm" id="uploadForm" action="/story" method="POST" encType="multipart/form-data">
+	<input type="file" id="story_image_input" name="image" accept="image/*" />
 	<div class="input-group">
 		<div class="input-group-prepend">
 		</div>
 		<textarea class="form-control" name="text" placeholder="What's on your mind?"></textarea>
 	</div>
+	<div id="selected_image_container">
+	</div>
 	<br>
 	<button id='story_submit_button' type="button submit" class="btn btn-success">Post</button>
+	<button id='add_photo_button' type="button" class="btn btn-dark">Add photo</button>
+
 </form>
+
+<!-- <form ref='uploadForm' id="uploadForm" action="/stories" method="post" encType="multipart/form-data">
+	<input type="file" id="story_image_input" name="image" accept="image/*"></input>
+	<textarea class="form-control" name="text" value="dsd" placeholder="What's on your mind?"></textarea>
+
+</form> -->
+
 <br>
 <br>
 <h2>Top Stories</h2>
 <br>
 <%include story_list.ejs%>
 </div>
+
+<script>
+$("#add_photo_button").click(function() {
+	$("#story_image_input").click();
+});
+
+$("#story_image_input").change(function(){
+	// $("#uploadForm").submit();
+	readURL(this);
+});
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function(e) {
+			$('#selected_image_container').append('<img class="story_uploaded_image" src=' + e.target.result + ' alt="" />');
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+</script>
+
 <%include partials/footer.ejs%>

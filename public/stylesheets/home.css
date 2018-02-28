@@ -1,6 +1,21 @@
+.story_uploaded_image {
+  height: 88px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 5px;
+}
+
+#selected_image_container {
+  /* padding-top: 10px;    */
+}
+
 textarea {
   height:100px;
   margin-top: 20px;
+}
+
+#story_image_input {
+  display: none;
 }
 
 #story_submit_button {

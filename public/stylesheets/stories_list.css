@@ -1,3 +1,14 @@
+.story_image {
+  height:500px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  border: 1px solid lightgrey;
+  max-width: 90%;
+}
 .profile_image {
   clip-path:circle(50% at center);
   margin-right: 5px;
