@@ -1,3 +1,8 @@
+#story_video {
+  width: 400px;
+  height: 400px;
+}
+
 #profile_image {
 /* clip-path:circle(100px at center); */
 min-width: 100%;

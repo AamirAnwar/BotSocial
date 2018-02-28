@@ -23,15 +23,22 @@
 
 						</div>
 
-						<!-- Story Image -->
-							<img class="story_image" src="/images/<%=stories[i]._id%>.jpg" alt="">
-						<!-- story content -->
-						<p class="card-text mb-auto">
-							<%=stories[i].text%>
-						</p>
+						<% if(stories[i].video_url) { %>
+							<!-- Story Video -->
+							<video class="story_video" autoplay>
+								<source src="<%=stories[i].video_url%>" type="video/mp4">
+								</video>
+						<% } else { %>
+							<!-- Story Image -->
+							<img class="story_image" src="<%=stories[i].image_url%>" alt="">
+						<% } %>
+							<!-- story content -->
+							<p class="card-text mb-auto">
+								<%=stories[i].text%>
+							</p>
 
-						<!-- Story reactions -->
-						<div class="story_reactions">
+							<!-- Story reactions -->
+							<div class="story_reactions">
 							<span>
 								<button id="like_<%=stories[i]._id%>" class="btn btn-primary like_button" name="button">
 									<span class='like_count'><%=stories[i].likes.length%></span>

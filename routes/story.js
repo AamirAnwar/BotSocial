@@ -25,18 +25,36 @@ router.post("/",middleware.isLoggedIn,function(req,res){
 		}
 		else {
 			// console.log("Current user is" + req.user);
+			story.author = req.user._id;
+			// Save image or video
 
-			// Save image
-			const file = req.files.image;
-			if (file) {
-				file.mv('./public/images/' + story._id + '.jpg', function(err){
+			var save_url = null;
+			var isVideo = true;
+			var file = null;
+			if (req.files.video) {
+				// Video is uploaded
+				file = req.files.video
+				save_url = './public/videos/' + story._id + '.mp4';
+			}
+			else if (req.files.image) {
+				// Photo is uploaded
+				file = req.files.image
+				save_url = './public/images/' + story._id + '.jpg';
+				isVideo = false;
+			}
+
+			if (file && save_url != null) {
+				file.mv(save_url, function(err){
 					if (err) {
 						//TODO But the story has already been saved!. Problem here if this fails
 						return res.status(500).send(err);
 					}
-
-
-				story.author = req.user._id;
+				if (isVideo) {
+					story.video_url = save_url.substring(8);
+				}
+				else {
+					story.image_url = save_url.substring(8);
+				}
 				story.save(function (err) {
 					req.flash('flash_msg', 'Successfully posted story!');
 					return res.redirect("/");

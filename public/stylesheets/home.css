@@ -14,7 +14,7 @@ textarea {
   margin-top: 20px;
 }
 
-#story_image_input {
+#story_image_input, #story_video_input {
   display: none;
 }
 

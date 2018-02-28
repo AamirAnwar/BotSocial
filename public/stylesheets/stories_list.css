@@ -1,4 +1,4 @@
-.story_image {
+.story_image,.story_video {
   height:500px;
   border-radius: 4px;
   overflow: hidden;

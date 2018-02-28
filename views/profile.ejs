@@ -7,8 +7,8 @@
       <div id="user_detail_snippet">
         <form ref='uploadForm' id="uploadForm" action="/user/image" method="post" encType="multipart/form-data">
           <input type="file" id="file_input" name="image" accept="image/*">
-          </input>
-        </form>
+        </input>
+      </form>
 
       <div id="profile_image_container">
         <img id="profile_image" src="/images/<%=user._id%>.jpg" alt="">
@@ -18,14 +18,15 @@
     </div>
 
     <p>Joined on <%=user.joinedDate%></p>
-  </div>
 
-  <div class='col-md-8 story_list'>
-    <h2>Stories</h2>
-    <%include story_list.ejs%>
-  </div>
+    </div>
 
-</div>
+    <div class='col-md-8 story_list'>
+      <h2>Stories</h2>
+      <%include story_list.ejs%>
+    </div>
+
+  </div>
 </div>
 
 <script>

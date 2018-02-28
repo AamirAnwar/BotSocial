@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/stylesheets/home.css">
 <form ref="uploadForm" id="uploadForm" action="/story" method="POST" encType="multipart/form-data">
 	<input type="file" id="story_image_input" name="image" accept="image/*" />
+	<input type="file" id="story_video_input" name="video" accept="video/*" />
 	<div class="input-group">
 		<div class="input-group-prepend">
 		</div>
@@ -12,6 +13,7 @@
 	<br>
 	<button id='story_submit_button' type="button submit" class="btn btn-success">Post</button>
 	<button id='add_photo_button' type="button" class="btn btn-dark">Add photo</button>
+	<button id='add_video_button' type="button" class="btn btn-dark">Add video</button>
 
 </form>
 
@@ -31,6 +33,11 @@
 <script>
 $("#add_photo_button").click(function() {
 	$("#story_image_input").click();
+});
+
+
+$("#add_video_button").click(function() {
+	$("#story_video_input").click();
 });
 
 $("#story_image_input").change(function(){

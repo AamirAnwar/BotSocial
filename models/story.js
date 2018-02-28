@@ -10,6 +10,8 @@ var StorySchema = new mongoose.Schema({
 	date:{type:Date,default:Date.now},
 	likes:[userType],
 	dislikes:[userType],
+	video_url:String,
+	image_url:String,
 	author: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref:'User'
