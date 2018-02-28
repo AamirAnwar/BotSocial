@@ -5,6 +5,16 @@
   margin: 5px;
 }
 
+.story_actions_container {
+margin-top: 15px;
+margin-bottom: 10px;
+}
+
+.stories_heading {
+  margin-top: 80px;
+  /* text-align: center; */
+}
+
 #selected_image_container {
   /* padding-top: 10px;    */
 }

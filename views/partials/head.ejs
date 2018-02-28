@@ -4,17 +4,25 @@ integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
 
+<style>
+.copyright_footer {
+	text-align: center;
+}
+</style>
+
 <nav class="navbar navbar-light bg-light">
 	<a class="navbar-brand" href="/">
-		<img src="/images/bot_social_icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+		<!-- <img src="" width="30" height="30" class="d-inline-block align-top" alt=""> -->
 		BotSocial
 	</a>
-	<ul class="nav">
-		<li class="nav-item">
-			<a class="nav-link active" href="/profile/<%=currentUser._id%>">Profile</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link active" href="/logout">Logout</a>
-		</li>
-	</ul>
-</nav>
+	<% if (currentUser) {%>
+		<ul class="nav">
+			<li class="nav-item">
+				<a class="nav-link active" href="/profile/<%=currentUser._id%>">Profile</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link active" href="/logout">Logout</a>
+			</li>
+		</ul>
+		<%}%>
+	</nav>

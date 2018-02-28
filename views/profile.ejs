@@ -1,32 +1,32 @@
 <%include partials/header.ejs%>
-<!DOCTYPE html>
 <link rel="stylesheet" href="/stylesheets/profile.css">
 <div class='container' id="profile_container">
   <div class="row">
-    <div class='col-md-4 sidebar'>
+    <div class='col-md-2 sidebar'>
+      <div class="card">
       <div id="user_detail_snippet">
         <form ref='uploadForm' id="uploadForm" action="/user/image" method="post" encType="multipart/form-data">
           <input type="file" id="file_input" name="image" accept="image/*">
         </input>
       </form>
 
-      <div id="profile_image_container">
-        <img id="profile_image" src="/images/<%=user._id%>.jpg" alt="">
+      <div id="profile_image_container" style="background-image: url(/images/<%=user._id%>.jpg);">
+        <!-- <img id="profile_image" src="/images/<%=user._id%>.jpg" alt=""> -->
       </div>
 
-      <h1 id="username_text"><%=user.username%></h1>
+      <p id="username_text"><strong><%=user.username%></strong></p>
     </div>
 
-    <p>Joined on <%=user.joinedDate%></p>
-
-    </div>
-
-    <div class='col-md-8 story_list'>
-      <h2>Stories</h2>
-      <%include story_list.ejs%>
-    </div>
-
+    <p>Joined <%=user.joinedDate%></p>
+</div>
   </div>
+
+  <div class='col-md-10 story_list'>
+    <h2>Stories</h2>
+    <%include story_list.ejs%>
+  </div>
+
+</div>
 </div>
 
 <script>

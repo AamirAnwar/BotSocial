@@ -1,11 +1,13 @@
 <link rel="stylesheet" href="/stylesheets/comment.css">
-<div class="card">
+
   <div class="card-block">
 
-    <div class="container comment_container">
+    <div class="comment_container card">
       <div class="row">
         <div class="col-lg-1">
-          <img class="profile_image" src="/images/<%=story.author._id%>.jpg" alt="">
+          <div style="background-image: url(/images/<%=story.author._id%>.jpg);" class="profile_image">
+          </div>
+          <!-- <img class="profile_image" src="/images/<%=story.author._id%>.jpg" alt=""> -->
         </div>
         <!-- Comment form -->
         <div class="col-lg-11">
@@ -25,7 +27,9 @@
 
               <div class="row">
                 <div class="col-lg-1">
-                  <img class="profile_image" src="/images/<%=story.comments[j].author.id%>.jpg" alt="">
+                  <div style="background-image: url(/images/<%=story.comments[j].author.id%>.jpg);" class="profile_image">
+    							</div>
+                  <!-- <img class="profile_image" src="/images/<%=story.comments[j].author.id%>.jpg" alt=""> -->
                 </div>
 
                 <div class="col-lg-11">
@@ -42,4 +46,3 @@
         <%}%>
       </div>
     </div>
-  </div>

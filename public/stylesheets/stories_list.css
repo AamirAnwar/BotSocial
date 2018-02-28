@@ -1,4 +1,4 @@
-.story_image,.story_video {
+.story_image {
   height:500px;
   border-radius: 4px;
   overflow: hidden;
@@ -7,13 +7,32 @@
   margin-right: auto;
   margin-bottom: 10px;
   border: 1px solid lightgrey;
-  max-width: 90%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.story_video {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  border: 1px solid lightgrey;
+
 }
 .profile_image {
   clip-path:circle(50% at center);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   margin-right: 5px;
-  max-width: 40px;
-  max-height: 40px;
+  height: 60px;
+  width: 60px;
+  float: left;
 }
 
 .fa-thumbs-up, .fa-thumbs-down {
@@ -36,4 +55,8 @@ a {
 .story_date p {
   color: gray;
   font-size: 14px;
+}
+
+.username_label {
+  
 }

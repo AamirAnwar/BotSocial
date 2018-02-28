@@ -4,10 +4,14 @@
 	<title>BotSocial</title>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link rel="stylesheet" href="stylesheets/animate.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="/images/bot_social_icon.png">
 </head>
-<body class='container'>
-	<%include head.ejs%>
+
+<body>
+<%include head.ejs%>
+<div class="container">
 	<%if (flash_msg) {%>
 		<div class="alert alert-success" role="alert">
 			<%=flash_msg%>

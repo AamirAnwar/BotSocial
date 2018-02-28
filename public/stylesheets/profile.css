@@ -1,27 +1,24 @@
-#story_video {
-  width: 400px;
-  height: 400px;
-}
 
-#profile_image {
-/* clip-path:circle(100px at center); */
-min-width: 100%;
-min-height: 100%;
-max-width: 120%;
-max-height: 120%;
-width: auto;
-height: auto;
-object-fit: contain;
-}
 
 #profile_image_container {
-clip-path:circle(50% at center);
-  width: 200px;
-  height: 200px;
+  clip-path:circle(50% at center);
+  width: 100px;
+  height: 100px;
   background-color: lightgrey;
   cursor: pointer;
   overflow: hidden;
+  margin: auto;
+  margin-top: 10px;
+  background-size: cover;
+}
 
+#username_text {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.sidebar {
+  text-align: center;
 }
 
 #file_input {
@@ -33,7 +30,7 @@ clip-path:circle(50% at center);
 }
 
 #user_detail_snippet {
-  width: 300px;
+  width: 100%;
 }
 
 #username_text {

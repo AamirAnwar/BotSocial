@@ -1,5 +1,6 @@
-<link rel="stylesheet" href="stylesheets/animate.css">
 <link rel="stylesheet" href="/stylesheets/stories_list.css">
+<link href="//vjs.zencdn.net/5.19/video-js.min.css" rel="stylesheet">
+<script src="//vjs.zencdn.net/5.19/video.min.js"></script>
 <%if (stories.length == 0) {%>
 	<h1>	No stories yet!	</h1>
 	<%}%>
@@ -9,12 +10,13 @@
 				<div class="card flex-md-row mb-4 box-shadow h-md-250">
 					<div class="card-body d-flex flex-column align-items-start">
 
-						<!-- username -->
+						<!-- User Detail -->
 						<h4 class="mb-0">
-							<span>
-								<img class="profile_image" src="/images/<%=stories[i].author.id%>.jpg" alt="">
-							</span>
-							<a href="/profile/<%=stories[i].author.id%>"><%=stories[i].author.username%></a>
+							<!-- <span> -->
+							<div style="background-image: url(/images/<%=stories[i].author.id%>.jpg);" class="profile_image">
+							</div>
+							<!-- </span> -->
+							<a class="username_label" href="/profile/<%=stories[i].author.id%>"><%=stories[i].author.username%></a>
 						</h4>
 
 						<!-- date -->
@@ -23,19 +25,37 @@
 
 						</div>
 
+						<!-- story content -->
+						<p class="card-text mb-auto">
+							<%=stories[i].text%>
+						</p>
+
+
 						<% if(stories[i].video_url) { %>
-							<!-- Story Video -->
-							<video class="story_video">
+								<video
+								id="my-player"
+								class="video-js story_video"
+								preload="auto"
+								autoplay
+								muted
+								data-setup='{}'>
 								<source src="<%=stories[i].video_url%>" type="video/mp4">
-								</video>
+								<p class="vjs-no-js">
+									To view this video please enable JavaScript, and consider upgrading to a
+									web browser that
+									<a href="http://videojs.com/html5-video-support/" target="_blank">
+										supports HTML5 video
+									</a>
+								</p>
+							</video>
+
+
 						<% } else { %>
 							<!-- Story Image -->
-							<img class="story_image" src="<%=stories[i].image_url%>" alt="">
+							<div style="background-image: url(<%=stories[i].image_url%>);" class="story_image">
+							<!-- <img src="<%=stories[i].image_url%>" alt=""> -->
+							</div>
 						<% } %>
-							<!-- story content -->
-							<p class="card-text mb-auto">
-								<%=stories[i].text%>
-							</p>
 
 							<!-- Story reactions -->
 							<div class="story_reactions">
@@ -69,8 +89,6 @@
 										</div>
 									</div>
 								</div>
-
-
 							</span>
 						</div>
 					</div>
@@ -80,72 +98,4 @@
 		</div>
 		<%}%>
 
-		<script type="text/javascript">
-
-		function openCommentsDialog(story_id) {
-
-		}
-
-		$(".comments_button").click(function() {
-			// modal-content
-			const prefix = "comments_button_";
-			openCommentsDialog($(this).attr('id').substring(prefix.length));
-		});
-
-		$(".like_button").click(function(){
-			// console.log("Like button clicked with id " + $(this).attr('id'));
-			like($(this).attr('id'));
-		});
-		$(".dislike_button").click(function(){
-			dislike($(this).attr('id'));
-		});
-
-
-		function like(story_id) {
-			// console.log("getting theere!");
-			$.post("/story/"+story_id.substring(5)+"/like", function(data) {
-				if (data.success == true) {
-					// Succeed in liking the picture
-					$("#like_"+data.story._id).animateCss('bounceIn');
-					$("#like_"+data.story._id).find('.like_count').text(data.count);
-				}
-			});
-		}
-
-		function dislike(story_id) {
-			// console.log("getting theere!");
-			$.post("/story/"+story_id.substring(8)+"/dislike", function(data) {
-				if (data.success == true) {
-					// Succeed in liking the picture
-					$("#dislike_"+data.story._id).animateCss('bounceIn');
-					$("#dislike_"+data.story._id).find('.dislike_count').text(data.count);
-				}
-			});
-		}
-
-		$.fn.extend({
-			animateCss: function(animationName, callback) {
-				var animationEnd = (function(el) {
-					var animations = {
-						animation: 'animationend',
-						OAnimation: 'oAnimationEnd',
-						MozAnimation: 'mozAnimationEnd',
-						WebkitAnimation: 'webkitAnimationEnd',
-					};
-
-					for (var t in animations) {
-						if (el.style[t] !== undefined) {
-							return animations[t];
-						}
-					}
-				})(document.createElement('div'));
-
-				this.addClass('animated ' + animationName).one(animationEnd, function() {
-					$(this).removeClass('animated ' + animationName);
-
-					if (typeof callback === 'function') callback();
-				});
-				return this;
-			},
-		});
-		</script>
+<script src="/js/story_list.js"></script>
