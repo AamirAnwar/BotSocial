@@ -9,7 +9,8 @@ var middleware = require('./middleware');
 var expressSession = require('express-session');
 var flash = require('connect-flash-light');
 var cookieParser = require('cookie-parser');
-
+var expressLogging = require('express-logging');
+var logger = require('logops');
 
 // Data Models
 var User = require('./models/user')
@@ -19,6 +20,9 @@ var Story = require('./models/story');
 var AuthRouter = require('./routes/auth');
 var UserRouter = require('./routes/user');
 var StoryRouter = require('./routes/story');
+
+// API v1
+var ApiStoryRouter = require('./routes/api/v1/story');
 
 // App Setup
 var app = express();
@@ -65,6 +69,9 @@ app.use(function(req, res, next) {
 	next();
 });
 
+// Logging
+app.use(expressLogging(logger));
+
 // Setup passport
 // Used for encoding and decoding user session data associated with each http packet
 passport.use(new LocalStrategy(User.authenticate()));
@@ -79,6 +86,7 @@ mongoose.connect(mongoConnectURL);
 app.use(AuthRouter);
 app.use('/user',UserRouter);
 app.use('/story',StoryRouter);
+app.use('/api/v1/story',ApiStoryRouter);
 
 // Home page
 app.get("/", function(req, res){
