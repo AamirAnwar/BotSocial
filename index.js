@@ -9,7 +9,6 @@ var middleware = require('./middleware');
 var expressSession = require('express-session');
 var flash = require('connect-flash-light');
 var cookieParser = require('cookie-parser');
-var moment = require('moment');
 
 
 // Data Models
@@ -18,11 +17,12 @@ var Story = require('./models/story');
 
 // Routers
 var AuthRouter = require('./routes/auth');
+var UserRouter = require('./routes/user');
 var StoryRouter = require('./routes/story');
 
 // App Setup
 var app = express();
-var PORT = 3000;
+var PORT = 5000;
 
 // Express middleware and setup
 
@@ -77,29 +77,8 @@ mongoose.connect(mongoConnectURL);
 
 // Routes
 app.use(AuthRouter);
+app.use('/user',UserRouter);
 app.use('/story',StoryRouter);
-
-// Show profile page
-app.get('/profile/:id',middleware.isLoggedIn, function(req,res) {
-	user_id = req.params.id;
-	if (!user_id) {
-		user_id = req.user._id;
-	}
-
-	User.findOne({_id:user_id}, function(err, user){
-		if (err || !user) {
-			console.log("No user!");
-			res.redirect('/');
-		}
-		else {
-			GetUserStories(user._id, function(stories) {
-				user.joinedDate = moment(user.date).format('MMMM DD, YYYY')
-				res.render('profile', {user:user, stories:stories});
-			});
-		}
-
-	});
-});
 
 // Home page
 app.get("/", function(req, res){
@@ -112,57 +91,11 @@ app.get("/", function(req, res){
 	});
 });
 
-app.post('/user/image',function(req,res){
-	if (!req.files) {
-		return res.status(400).send('No files were uploaded');
-	}
-	const file = req.files.image;
-	file.mv('./public/images/' + req.user._id + '.jpg', function(err){
-		if (err) {
-			return res.status(500).send(err);
-		}
-		res.redirect('back');
-
-	});
-
-});
-
-app.post('/stories',function(req,res){
-	if (!req.files) {
-		return res.status(400).send('No files were uploaded');
-	}
-	console.log(req.files);
-	return res.redirect('back');
-	const file = req.files.image;
-	file.mv('./public/images/' + req.user._id + '.jpg', function(err){
-		if (err) {
-			return res.status(500).send(err);
-		}
-		res.redirect('back');
-
-	});
-
-});
-
 
 // Fallback Route
-app.get("/*", function(req, res){
+app.get("/*", function(req, res) {
 	res.send("Nothing here");
 });
-
-
-// DB Helpers
-var GetUserStories = function(id, callback) {
-	Story.find({'author':id}).populate('author').exec(function(err, stories){
-		if (err) {
-			console.log(err);
-			callback([]);
-		}
-		else {
-			callback(stories);
-		}
-	});
-}
 
 var GetStories = function(callback){
 	Story.find({},null,{sort:'-date'}).populate('author').exec(function (err, stories) {
