@@ -1,0 +1,36 @@
+#profile_image_container {
+  clip-path:circle(50% at center);
+  width: 100px;
+  height: 100px;
+  background-color: lightgrey;
+  cursor: pointer;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 10px;
+  background-size: cover;
+}
+
+#username_text {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.sidebar {
+  text-align: center;
+}
+
+#file_input {
+  display: none;
+}
+
+#profile_container {
+  margin-top: 25px;
+}
+
+#user_detail_snippet {
+  width: 100%;
+}
+
+#username_text {
+  margin-top: 10px;
+}

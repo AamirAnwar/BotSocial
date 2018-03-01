@@ -1,0 +1,42 @@
+.story_uploaded_image {
+  height: 88px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 5px;
+}
+
+.story_actions_container {
+margin-top: 15px;
+margin-bottom: 10px;
+}
+
+.stories_heading {
+  margin-top: 80px;
+  /* text-align: center; */
+}
+
+.story_action {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+#selected_image_container {
+  /* padding-top: 10px;    */
+}
+
+textarea {
+  height:100px;
+  margin-top: 20px;
+}
+
+#story_image_input, #story_video_input {
+  display: none;
+}
+
+#story_submit_button {
+  width: 100px;
+}
+
+.container {
+  width: 70%;
+}
