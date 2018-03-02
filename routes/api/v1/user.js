@@ -33,7 +33,7 @@ router.post("/register", function(req,res) {
 });
 
 router.post("/login" , passport.authenticate("local"),function(req,res) {
-	console.log(req.user);
+	// console.log(req);
 	var token = jwt.sign({ user_id: req.user._id }, cfg.jwtSecret);
 	return res.json({
 		"status":"success",

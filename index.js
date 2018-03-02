@@ -40,7 +40,9 @@ app.set('view engine','ejs');
 app.use(express.static('public'));
 
 //  Allows us to do 'req.body and req.query'
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 // Used for displaying flash messages
 app.use(cookieParser());
@@ -85,6 +87,14 @@ passport.deserializeUser(User.deserializeUser());
 // Setup mongoose
 const mongoConnectURL = 'mongodb://localhost/botsocial_v1';
 mongoose.connect(mongoConnectURL);
+
+// CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 
 
 // JSW JwtStrategy

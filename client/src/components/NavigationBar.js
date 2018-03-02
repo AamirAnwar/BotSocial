@@ -1,4 +1,6 @@
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
+import {logoutUser} from '../actions'
 import {Link} from 'react-router-dom';
 class NavBar extends Component {
   renderNavItems() {
@@ -14,7 +16,7 @@ class NavBar extends Component {
             <Link className="nav-link active" to= {`/user/${234}`}>Profile</Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link active" href="/logout">Logout</a>
+            <a className="nav-link active" onClick={(e)=>{this.props.logoutUser();}}>Logout</a>
           </li>
         </ul>
       );
@@ -25,6 +27,7 @@ class NavBar extends Component {
   }
 
   render() {
+    console.log('Navbar is rendering!');
     return(
 
       <nav className="navbar navbar-light bg-light">
@@ -38,4 +41,4 @@ class NavBar extends Component {
 }
 }
 
-export default NavBar;
+export default connect(null, {logoutUser})(NavBar);

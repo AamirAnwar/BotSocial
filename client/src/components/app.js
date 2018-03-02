@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import NavBar from './NavigationBar';
 import Home from './Home';
+import AuthForm from './AuthForm';
 import Profile from './Profile';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -9,7 +10,6 @@ import promise from 'redux-promise';
 import {
   BrowserRouter as Router,
   Route,
-  Link
 } from 'react-router-dom';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
@@ -20,13 +20,17 @@ class App extends Component {
         <Router>
           <div>
             <NavBar />
-            <Route exact path="/" component={Home}/>
+            <Route exact path ="/" component={Home} />
+            <Route exact path="/login" type="login" component={()=>{return <AuthForm type="login" />}}/>
+            <Route exact path="/register" type="register" component={()=>{return <AuthForm type="register" />}}/>
             <Route path="/user" component={Profile}/>
           </div>
         </Router>
       </Provider>
+
     );
   }
 }
+
 
 export default App;

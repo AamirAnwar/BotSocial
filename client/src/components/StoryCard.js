@@ -38,7 +38,7 @@ render() {
   return (
     <div className="card flex-md-row mb-4 box-shadow h-md-250">
       <div className="card-body d-flex flex-column align-items-start">
-        <UserSnippet />
+        <UserSnippet story={story} />
 
         <p className="card-text mb-auto">
           {this.props.story.text}
