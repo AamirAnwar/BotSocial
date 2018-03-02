@@ -27,9 +27,7 @@ class NavBar extends Component {
   }
 
   render() {
-    console.log('Navbar is rendering!');
     return(
-
       <nav className="navbar navbar-light bg-light">
         <Link className="navbar-brand" to="/">
         BotSocial

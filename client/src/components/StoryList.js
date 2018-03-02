@@ -6,7 +6,7 @@ import _ from 'lodash';
 class StoryList extends Component {
 	renderStories() {
 		return _.map(this.props.stories, (story,i) => {
-			return <StoryCard key={this.props.stories[i]._id} story={this.props.stories[i]}/>
+			return <StoryCard user={this.props.user} key={this.props.stories[i]._id} story={this.props.stories[i]}/>
 		});
 	}
 
@@ -20,7 +20,7 @@ class StoryList extends Component {
 }
 
 function mapStateToProps(state) {
-	return {stories:state.stories};
+	return {stories:state.stories,user:state.user};
 }
 
 export default connect(mapStateToProps)(StoryList);

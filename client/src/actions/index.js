@@ -4,6 +4,10 @@ export const FETCH_STORIES = 'fetch_stories';
 export const REGISTER_USER = 'register_user';
 export const LOGIN_USER = 'login_user';
 export const LOGOUT_USER = 'logout_user';
+export const CREATE_STORY = 'create_story';
+export const LIKE_STORY = 'like_story';
+export const DISLIKE_STORY = 'dislike_story';
+export const COMMENT_STORY = 'comment_story';
 
 
 const ROOT_URL = '/api/v1';
@@ -41,6 +45,40 @@ export function fetchStories(auth_token) {
     payload: request
   }
 }
+
+export function createStory(text, auth_token) {
+  const request = axios.post(`${ROOT_URL}/story`, {text:text},{'headers':{'auth_token':auth_token}});
+  return {
+    type:CREATE_STORY,
+    payload:request
+  }
+}
+
+export function likeStory(story_id, auth_token) {
+  const request = axios.post(`${ROOT_URL}/story/${story_id}/like`,{},{'headers':{'auth_token':auth_token}});
+  return {
+    type:LIKE_STORY,
+    payload:request
+  }
+}
+
+export function dislikeStory(story_id, auth_token) {
+  const request = axios.post(`${ROOT_URL}/story/${story_id}/dislike`,{},{'headers':{'auth_token':auth_token}});
+  return {
+    type:DISLIKE_STORY,
+    payload:request
+  }
+}
+
+
+export function commentStory(story_id, text,auth_token) {
+  const request = axios.post(`${ROOT_URL}/story/${story_id}/comment`,{text:text},{'headers':{'auth_token':auth_token}});
+  return {
+    type:COMMENT_STORY,
+    payload:request
+  }
+}
+
 
 export function logoutUser() {
   return {

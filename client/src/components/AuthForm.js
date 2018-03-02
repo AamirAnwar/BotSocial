@@ -12,7 +12,6 @@ class AuthForm extends Component {
 
   render() {
     if (this.props.user) {
-      console.log("Redirecting! to home");
       return  <Redirect to='/' />
     }
 
@@ -83,7 +82,6 @@ class AuthForm extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("State at AuthForm " + JSON.stringify(state,null,2));
   return {
     user:state.user
   }

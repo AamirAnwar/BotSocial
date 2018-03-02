@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/stylesheets/story_list.css">
     <link rel="stylesheet" href="/stylesheets/auth_form.css">
     <link rel="stylesheet" href="/stylesheets/profile.css">
+    <link rel="stylesheet" href="/stylesheets/comment_section.css">
     <link rel="stylesheet" href="stylesheets/animate.css">
     <link href="//vjs.zencdn.net/5.19/video-js.min.css" rel="stylesheet">
     <!--
@@ -47,8 +48,15 @@
     -->
   </body>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="//vjs.zencdn.net/5.19/video.min.js"></script>
   <script src="%PUBLIC_URL%/scripts/home.js"></script>
   <script src="%PUBLIC_URL%/scripts/story_list.js"></script>
   <script src="%PUBLIC_URL%/scripts/profile.js"></script>
+  <script type="text/javascript">
+    function clearOverlay(overlay_id) {
+      console.log("Called with" + overlay_id);
+      $("#"+overlay_id).removeClass("show");
+    }
+  </script>
 </html>

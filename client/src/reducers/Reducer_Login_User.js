@@ -11,7 +11,8 @@ export default function(state=null, action) {
         access_token:data.access_token
       }
     }
-    case LOGOUT_USER: return null
+    break;
+    case LOGOUT_USER: return null;
     default: return state;
   }
 }

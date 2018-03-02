@@ -25,7 +25,10 @@ class StoryCard extends Component {
       </video>
     );
   }
-  return <div style={{'backgroundImage': `url(http://localhost:5000${story.image_url})`}} className="story_image"></div>
+  else if (story.image_url) {
+    return <div style={{'backgroundImage': `url(${story.image_url})`}} className="story_image"></div>
+  }
+  return <div></div>
 
 }
 
@@ -44,7 +47,7 @@ render() {
           {this.props.story.text}
         </p>
         {this.renderStoryMedia(story)}
-        <StoryReactionsSnippet story={story} />
+        <StoryReactionsSnippet story={story} user={this.props.user}/>
       </div>
 
     </div>

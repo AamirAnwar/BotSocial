@@ -14,12 +14,12 @@ class Home extends Component {
       return  <Redirect to='/login' />
     }
 
-    if (this.props.stories.length == 0) {
+    if (this.props.stories.length === 0) {
       this.props.fetchStories(this.props.user.access_token);
     }
     return (
       <div className="container">
-        <StoryForm />
+        <StoryForm user={this.props.user} />
         <StoryList stories={this.props.stories}/>
       </div>
     );
@@ -28,7 +28,6 @@ class Home extends Component {
 
 function mapStateToProps(state) {
   // console.log(JSON.stringify(state.stories,null,2));
-  console.log("State in Home " + state);
   return {
     stories:state.stories,
     user:state.user
