@@ -5,9 +5,12 @@ const mongoose = require('mongoose');
 const Story = mongoose.model('Story');
 const middleware = require('../../../middleware');
 
+
 // Get all stories
 // TODO load more
-router.get('/', function(req,res) {
+
+router.get('/', passport.authenticate('jwt', { session: false }),function(req,res) {
+  // console.log(req);
   GetStories(function(stories){
 		res.send(stories);
 	});

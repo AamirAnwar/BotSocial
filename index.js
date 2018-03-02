@@ -11,6 +11,9 @@ var flash = require('connect-flash-light');
 var cookieParser = require('cookie-parser');
 var expressLogging = require('express-logging');
 var logger = require('logops');
+var JwtStrategy = require('passport-jwt').Strategy,
+    ExtractJwt = require('passport-jwt').ExtractJwt;
+var cfg = require("./config.js");
 
 // Data Models
 var User = require('./models/user')
@@ -20,9 +23,9 @@ var Story = require('./models/story');
 var AuthRouter = require('./routes/auth');
 var UserRouter = require('./routes/user');
 var StoryRouter = require('./routes/story');
-
 // API v1
 var ApiStoryRouter = require('./routes/api/v1/story');
+var ApiUserRouter = require('./routes/api/v1/user');
 
 // App Setup
 var app = express();
@@ -78,15 +81,47 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 // Setup mongoose
 const mongoConnectURL = 'mongodb://localhost/botsocial_v1';
 mongoose.connect(mongoConnectURL);
+
+
+// JSW JwtStrategy
+var opts = {}
+opts.jwtFromRequest = function(req) {
+  // console.log("Sending " + req.headers.auth_token);
+  return req.headers.auth_token;
+}
+
+opts.secretOrKey = cfg.jwtSecret;
+
+// opts.audience = 'yoursite.net';
+passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+		// console.log("ID being used" + JSON.stringify(jwt_payload, null, 2));
+    User.findById(jwt_payload.user_id, function(err, user) {
+        if (err) {
+          console.log(err);
+            return done(err, false);
+        }
+        if (user) {
+					console.log("Current user" + user);
+            return done(null, user);
+        } else {
+          // console.log("No user");
+            return done(null, false);
+            // or you could create a new account
+        }
+    });
+}));
+
 
 // Routes
 app.use(AuthRouter);
 app.use('/user',UserRouter);
 app.use('/story',StoryRouter);
 app.use('/api/v1/story',ApiStoryRouter);
+app.use('/api/v1/user',ApiUserRouter);
 
 // Home page
 app.get("/", function(req, res){
@@ -99,12 +134,6 @@ app.get("/", function(req, res){
 	});
 });
 
-
-// Fallback Route
-app.get("/*", function(req, res) {
-	res.send("Nothing here");
-});
-
 var GetStories = function(callback){
 	Story.find({},null,{sort:'-date'}).populate('author').exec(function (err, stories) {
 		if (err) {
@@ -115,6 +144,13 @@ var GetStories = function(callback){
 		}
 	});
 }
+
+
+// Fallback Route
+app.get("/*", function(req, res) {
+	res.send("Nothing here");
+});
+
 
 // Start Server
 app.listen(PORT, function() {
