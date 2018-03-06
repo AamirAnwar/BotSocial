@@ -23,6 +23,7 @@ var Story = require('./models/story');
 var AuthRouter = require('./routes/auth');
 var UserRouter = require('./routes/user');
 var StoryRouter = require('./routes/story');
+
 // API v1
 var ApiStoryRouter = require('./routes/api/v1/story');
 var ApiUserRouter = require('./routes/api/v1/user');
@@ -40,7 +41,7 @@ app.set('view engine','ejs');
 app.use(express.static('public'));
 
 //  Allows us to do 'req.body and req.query'
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
@@ -70,7 +71,6 @@ app.use(function(req, res, next) {
 	res.locals.currentUser = req.user;
 	res.locals.flash_msg = req.flash('flash_msg');
 	res.locals.flash_msg_fail = req.flash('flash_msg_fail');
-
 	next();
 });
 
@@ -89,12 +89,11 @@ const mongoConnectURL = 'mongodb://localhost/botsocial_v1';
 mongoose.connect(mongoConnectURL);
 
 // CORS
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 
 // JSW JwtStrategy
@@ -126,10 +125,12 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
 }));
 
 
-// Routes
+// Local Routes
 app.use(AuthRouter);
 app.use('/user',UserRouter);
 app.use('/story',StoryRouter);
+
+// API v1 Routers
 app.use('/api/v1/story',ApiStoryRouter);
 app.use('/api/v1/user',ApiUserRouter);
 
