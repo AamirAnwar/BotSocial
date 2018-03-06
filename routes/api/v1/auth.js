@@ -4,11 +4,6 @@ var passport = require('passport');
 var User = require('mongoose').model('User');
 var jwt = require('jsonwebtoken');
 
-// Auth Routes
-router.get("/register", function(req, res) {
-	res.render("register");
-});
-
 router.post("/register", function(req,res) {
 	// console.log("Creating a new user now with" + "\nemail:" + req.body.email + "\npassword:" + req.body.password);
 	const username = req.body.username;
